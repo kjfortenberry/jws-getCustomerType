@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/90" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd">
+	<!-- version of weblogic supported -->
+	<weblogic-version>10.3</weblogic-version>
+	<!-- dispatch policy (WLS work manager to which application is assigned) -->
+	<wl-dispatch-policy>auxWorkManager</wl-dispatch-policy>
+	<session-descriptor>
+		<debug-enabled>true</debug-enabled>
+	</session-descriptor>
+	<jsp-descriptor>
+		<page-check-seconds>10</page-check-seconds>
+	</jsp-descriptor>
+	<container-descriptor>
+		<servlet-reload-check-secs>10</servlet-reload-check-secs>
+		<resource-reload-check-secs>10</resource-reload-check-secs>
+	</container-descriptor>
+	<context-root>/apps/soa/gct</context-root>
+	<!--  
+	<resource-description>
+		<res-ref-name>DS_MID_APP</res-ref-name>
+		<jndi-name>jdbc/MidAppDS</jndi-name>
+	</resource-description>
+	-->
+</weblogic-web-app>

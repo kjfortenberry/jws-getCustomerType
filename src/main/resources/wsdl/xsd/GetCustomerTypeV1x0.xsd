@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.krusty.com/soa/types/GetCustomerRating/v1x0"
+	xmlns:common="http://www.krusty.com/common/types/v1x"
+	elementFormDefault="qualified"
+	targetNamespace="http://www.krusty.com/soa/types/GetCustomerType/v1x0" 
+	xmlns:Q1="http://www.krusty.com/soa/types/GetCustomerType/v1x0">
+
+	<xsd:import schemaLocation="soa_v1_common.xsd" namespace="http://www.krusty.com/common/types/v1x"></xsd:import>
+	
+	<xsd:element name="GetCustomerTypeRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="SOARequestInfo"
+					type="common:SOARequestInfoType" />
+				<xsd:element name="PhoneNumber">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:pattern value="\d{10}" />
+							<xsd:length value="10" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="AccountNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="GetCustomerTypeResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="SOAResponseInfo" type="common:SOAResponseInfoType" minOccurs="0" />
+				<xsd:element name="Result" type="Q1:CustomerAccountRating">
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="CustomerAccountRating">
+		<xsd:sequence>
+			<xsd:element name="PhoneNumber" type="xsd:string" />
+			<xsd:element name="AccountNumber" type="xsd:string" minOccurs="0" />
+			<xsd:element name="RatingCode" type="xsd:string" minOccurs="0" />
+			<xsd:element name="IsOMSe" type="xsd:string" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+</xsd:schema>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+				 xmlns:common="http://www.krusty.com/common/types/v1x" 
+				 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+				 xmlns:tns="http://www.krusty.com/soa/types/GetCustomerType/v1x0" 
+				 xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+				 targetNamespace="http://www.krusty.com/soa/types/GetCustomerType/v1x0">
+     <types>
+     	<xs:schema elementFormDefault="qualified">
+		<xs:import namespace="http://www.krusty.com/common/types/v1x" schemaLocation="xsd/soa_v1_common.xsd"/>
+		<xs:import namespace="http://www.krusty.com/soa/types/GetCustomerType/v1x0" schemaLocation="xsd/GetCustomerTypeV1x0.xsd"/>
+		</xs:schema>
+     </types>
+    <message name="inputMessage">
+     	<part element="common:ConversationHeader" name="header"/>
+        <part element="tns:GetCustomerTypeRequest" name="payload"/>
+    </message>    
+    <message name="outputMessage">
+     	<part element="common:ConversationHeader" name="header"/>
+        <part element="tns:GetCustomerTypeResponse" name="payload"/>
+    </message>
+    <message name="faultMessage">
+		<part element="common:SOAFWErrors" name="error"/>
+	</message>
+    <portType name="GetCustomerTypeServicePortType">
+        <operation name="execute">
+            <input message="tns:inputMessage"/>
+            <output message="tns:outputMessage"/>
+            <fault message="tns:faultMessage" name="GetCustomerTypeFault"/>
+        </operation>        
+    </portType>
+    <binding name="GetCustomerTypeV1x0ServiceBinding" type="tns:GetCustomerTypeServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="execute">
+            <soap:operation soapAction="customAction" style="document"/>
+            <input>
+                <soap:header message="tns:inputMessage" part="header" use="literal"/>
+                <soap:body parts="payload" use="literal"/>
+            </input>
+            <output>
+                <soap:header message="tns:outputMessage" part="header" use="literal"/>
+                <soap:body parts="payload" use="literal"/>
+            </output>      
+            <fault name="GetCustomerTypeFault">
+				<soap:fault name="GetCustomerTypeFault" use="literal"/>
+			</fault>        
+        </operation>
+    </binding>
+    <service name="GetCustomerTypeService">
+        <port binding="tns:GetCustomerTypeV1x0ServiceBinding" name="ServiceHttpPort">
+            <soap:address location="http://localhost:9080/SOAApp/services/GetCustomerTypeV1x0"/>
+        </port>
+    </service>     
+</definitions>

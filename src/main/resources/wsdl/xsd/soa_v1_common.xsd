@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.krusty.com/common/types/v1x" 
+   targetNamespace="http://www.krusty.com/common/types/v1x" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>
+
+		</xs:documentation>
+	</xs:annotation>
+	
+	<xs:element name="ConversationHeader">
+		<xs:annotation>
+			<xs:documentation>Conversation element that will go in SOAP Header</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="ClientMessageID" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A message ID set by the client.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CorrelationID" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>An ID that will allow us to track messages from a related transaction.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MessageID" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A message ID set by the SOA infrastructure to track a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RequestingSystem" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The system that submitted the request to the service.</xs:documentation>
+					</xs:annotation>
+				</xs:element>                                                
+				<xs:element name="UserID" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Constituent UserID</xs:documentation>
+					</xs:annotation>
+				</xs:element>                                                
+				<xs:element name="Password" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Constituent Password</xs:documentation>
+					</xs:annotation>
+				</xs:element>                                                				
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ClientConversationHeader">
+		<xs:annotation>
+			<xs:documentation>Client supplied Conversation element that will go in SOAP Header</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="ClientMessageID" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A message ID set by the client.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="RequestingSystem" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The system that submitted the request to the service.</xs:documentation>
+					</xs:annotation>
+				</xs:element>                                                
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="ServiceConversationHeader">
+		<xs:annotation>
+			<xs:documentation>Conversation element that will go in SOAP Header</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="CorrelationID" type="xs:string" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>An ID that will allow us to track messages from a related transaction.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MessageID" type="xs:string" minOccurs="1" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>A message ID set by the SOA infrastructure to track a message.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="SOARequestInfoType">
+		<xs:sequence>
+			<xs:element name="DeptID" minOccurs="1" maxOccurs="1">
+			  <xs:simpleType>
+                <xs:restriction base="xs:string">
+              	  <xs:minLength value="1"/>
+                </xs:restriction>
+              </xs:simpleType>
+			</xs:element>
+			<xs:element name="SystemID" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>the calling system id string</xs:documentation>
+				</xs:annotation>
+  			    <xs:simpleType>
+                  <xs:restriction base="xs:string">
+              	    <xs:minLength value="1"/>
+                  </xs:restriction>
+                </xs:simpleType>
+			</xs:element>
+			<xs:element name="EchoBack" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>data that is returned intact in the response</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SOAResponseInfoType">
+		<xs:sequence>
+			<xs:element name="ServiceInfo" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>normally empty; this is a set of diagnostic info from the SOA service; may return detailed error status,  retry counts, timing measurements, reason codes for delays etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Name" type="xs:string" use="required"/>
+					<xs:attribute name="Value" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="EchoBack" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="SOAFWErrors" type="tns:SOAFWErrorsType" />
+	
+	<xs:complexType name="SOAFWErrorsType">
+		<xs:sequence>
+			<xs:element name="Error" minOccurs="0" maxOccurs="1">
+				<xs:annotation><xs:documentation>SOAFW Error</xs:documentation></xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RawInfo" type="xs:string" />
+						<xs:element name="ResponseInfo" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>
+									This is a set of diagnostic info
+									from the SOA service; may return
+									detailed error status
+								</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="code" type="xs:string" use="required" />
+								<xs:attribute name="description" type="xs:string" use="required" />
+								<xs:attribute name="message" type="xs:string" />
+								<xs:attribute name="source" type="xs:string" />
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

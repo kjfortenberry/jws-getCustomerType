@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:context="http://www.springframework.org/schema/context"  
+       xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd 
+	   http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+       http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
+
+    <!-- detect @Endpoint -->
+	<sws:annotation-driven />
+
+	<!-- To detect @Service, @Component, etc
+	<context:component-scan base-package="com.bhn.autoCallBlocking.service" />
+    -->
+	<context:annotation-config />
+	
+	<!-- ===================== WSDL Definitions ============================== -->
+	<bean id="GetCustomerTypeV1x0" class="org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition">
+		<constructor-arg value="classpath:wsdl/GetCustomerTypeV1x0.wsdl" />
+	</bean>
+
+	<!-- ===================== ENDPOINTS ===================================== -->
+	<bean class="com.krusty.soa.gctv1x0.ws.GetCustomerTypeV1x0Endpoint" />
+
+	<!-- ===================== MARSHALLERS ===================================== -->
+	<bean id="gctV1x0Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>com.krusty.soa.gctv1x0.jaxb.GetCustomerTypeRequest</value>
+				<value>com.krusty.soa.gctv1x0.jaxb.GetCustomerTypeResponse</value>
+			</list>
+		</property>
+		<!--  <property name="contextPath" value="com.twcable.soa.types.gae.v1x0"/> -->
+		<property name="schemas">
+			<list>
+				<value>classpath:wsdl/xsd/GetCustomerTypeV1x0.xsd</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ===================== ENDPOINT ADAPTERS ============================== -->
+	<bean class="org.springframework.ws.server.endpoint.adapter.GenericMarshallingMethodEndpointAdapter">
+		<constructor-arg ref="gctV1x0Marshaller" />
+	</bean>
+	
+	<!-- ===================== SERVICES ===================================== -->
+	
+	<!-- ===================== DAO's ===================================== 
+	<bean id="addressableEquipmentListDao" class="com.bhn.soa.cpe.dao.AddressableEquipmentListDaoImpl" />
+	-->
+
+</beans>
