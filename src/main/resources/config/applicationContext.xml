@@ -47,7 +47,8 @@
 	</bean>
 	
 	<!-- ===================== SERVICES ===================================== -->
-	
+	<bean class="com.krusty.soa.gctv1x0.service.GetCustomerTypeV1x0ServiceImpl" />
+
 	<!-- ===================== DAO's ===================================== 
 	<bean id="addressableEquipmentListDao" class="com.bhn.soa.cpe.dao.AddressableEquipmentListDaoImpl" />
 	-->
